@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Бессмертный полк | Голышмановская СОШ №2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #ffcc00;
+            --dark-bg: #0d0f0d;
+            --card-bg: #1a1d1a;
+            --overlay: rgba(0, 0, 0, 0.98);
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            background-color: var(--dark-bg);
+            color: #ffffff;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        header {
+            width: 100%;
+            padding: 30px 15px;
+            text-align: center;
+            background: linear-gradient(to bottom, #1a2a1a, var(--dark-bg));
+            border-bottom: 2px solid var(--gold);
+        }
+
+        h1 { 
+            font-family: 'Oswald', sans-serif; 
+            font-size: 1.8rem; 
+            text-transform: uppercase; 
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        .school { 
+            color: var(--gold); 
+            font-weight: bold; 
+            margin-top: 8px; 
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
+
+        .grid {
+            display: grid;
+            /* Адаптивная сетка: 1 колонка на мобилках, больше на десктопе */
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+            width: 95%;
+            max-width: 1200px;
+            padding: 20px 0;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            border: 1px solid #333;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s;
+            position: relative;
+        }
+
+        /* На мобильных лучше не использовать тяжелый hover, только легкое нажатие */
+        .card:active { transform: scale(0.98); }
+
+        .photo-wrap {
+            width: 100%;
+            height: 320px;
+            background: #222;
+        }
+
+        .photo-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .info { padding: 12px; text-align: center; }
+        .name { font-family: 'Oswald', sans-serif; font-size: 1.1rem; margin-bottom: 4px; }
+        .dates { color: var(--gold); font-weight: bold; font-size: 0.8rem; }
+
+        /* МОДАЛЬНОЕ ОКНО ДЛЯ МОБИЛОК */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--overlay);
+            display: none;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            width: 100%;
+            height: 100%;
+            background: #111;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .modal-close {
+            position: fixed;
+            top: 15px; right: 15px;
+            font-size: 35px;
+            color: var(--gold);
+            width: 45px; height: 45px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            z-index: 1100;
+        }
+
+        .modal-body {
+            padding: 20px;
+            padding-top: 60px; /* Отступ для кнопки закрытия */
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .modal-img {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            border-radius: 8px;
+            border: 1px solid var(--gold);
+        }
+
+        .modal-text { width: 100%; }
+        .modal-text h2 { font-family: 'Oswald'; color: var(--gold); font-size: 1.6rem; margin-top: 0; }
+        .bio-label { color: var(--gold); font-weight: bold; margin-top: 15px; display: block; font-size: 0.85rem; text-transform: uppercase; }
+        .bio-content { line-height: 1.6; color: #ddd; margin-top: 6px; font-size: 1rem; white-space: pre-line; }
+
+        /* Для планшетов и ПК увеличиваем шрифты и меняем раскладку окна */
+        @media (min-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .modal-content {
+                width: 90%; height: auto; max-height: 90vh;
+                margin: auto; border-radius: 15px; border: 1px solid var(--gold);
+            }
+            .modal-body { flex-direction: row; align-items: flex-start; padding: 40px; }
+            .modal-img { width: 300px; }
+            .modal-close { position: absolute; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Бессмертный полк СВО</h1>
+        <div class="school">МАОУ «ГОЛЫШМАНОВСКАЯ СОШ №2»</div>
+    </header>
+
+    <div class="grid" id="mainGrid"></div>
+
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <div class="modal-close" onclick="closeModal()">&times;</div>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        const heroes = [
+            { 
+                n: "Щетков Иван Сергеевич", 
+                d: "07.02.1991 – 15.07.2022", 
+                p: "photo_2026-03-25_21-25-46.jpg",
+                bio: `Родился и вырос в посёлке Голышманово, учился в школе № 2. Окончил Тюменский железнодорожный колледж. Служил во Внутренних войсках МВД России.
+
+                Решение о службе по контракту принял как настоящий патриот. Награждён медалями «Участник манёвров войск «Восток-2018», «За воинскую доблесть» II степени.
+
+                Погиб героически в ходе спецоперации в Донбассе. Награждён орденом Мужества посмертно. В памяти друзей остался добрым парнем, который любил говорить: «Зато будет, что вспомнить!»`
+            },
+            { 
+                n: "Андреев Максим Олегович", 
+                d: "25.12.2000 – 30.09.2023", 
+                p: "photo_2026-03-25_21-23-37.jpg",
+                bio: `Выпускник школы № 2. С детства занимался гиревым спортом, кандидат в мастера спорта. Учился в ТВВИКУ.
+
+                Был мобилизован и с доблестью защищал Родину. Погиб при исполнении воинского долга. Максим был мужественным воином и целеустремленным человеком, настоящим Героем нашего времени.`
+            },
+            { 
+                n: "Хафизов Александр Наилевич", 
+                d: "15.01.1997 – 30.09.2023", 
+                p: "photo_2026-03-25_21-23-55.jpg",
+                bio: "Выпускник школы №2. Профессиональный военный. Погиб, выполняя боевую задачу. Награжден орденом Мужества посмертно."
+            },
+            { 
+                n: "Катков Никита Сергеевич", 
+                d: "19.03.2003 – 26.07.2024", 
+                p: "photo_2026-03-25_21-23-19.jpg",
+                bio: "Самый молодой герой школы. Отправился на СВО по зову сердца. Проявил отвагу и верность присяге. Кавалер ордена Мужества."
+            },
+            { 
+                n: "Обухов Сергей Владимирович", 
+                d: "04.07.1996 – 24.04.2025", 
+                p: "photo_2026-03-25_21-25-49.jpg",
+                bio: "Выпускник школы №2. Честный и надежный товарищ. Погиб при защите интересов Отечества. Награжден орденом Мужества."
+            },
+            { 
+                n: "Бециев Умар Хумидович", 
+                d: "26.11.1977 – 08.08.2024", 
+                p: "photo_2026-03-25_21-24-37.jpg",
+                bio: "Ветеран боевых действий, пример стойкости. Погиб как герой в зоне СВО. Вечная память выпускнику нашей школы."
+            },
+            { 
+                n: "Граф Андрей Евгеньевич", 
+                d: "03.12.1991 – 25.02.2025", 
+                p: "photo_2026-03-25_21-24-20.jpg",
+                bio: "Награжден орденом Мужества посмертно за исключительную храбрость в ходе выполнения боевых задач."
+            },
+            { 
+                n: "Горбань Алексей Сергеевич", 
+                d: "10.03.1986 – 29.04.2025", 
+                p: "photo_2026-03-25_21-23-02.jpg",
+                bio: "Профессиональный защитник, пал смертью храбрых в зоне спецоперации. Его имя навсегда в истории Голышмановского округа."
+            },
+            { 
+                n: "Зокиров Дильшод Файзуллоевич", 
+                d: "24.01.2001 – 10.10.2023", 
+                p: "photo_2026-03-25_21-22-39.jpg",
+                bio: "Молодой боец, отдавший жизнь за мирное будущее. Был добрым и отзывчивым парнем. Кавалер ордена Мужества."
+            }
+        ];
+
+        function render() {
+            document.getElementById('mainGrid').innerHTML = heroes.map((h, i) => `
+                <div class="card" onclick="openModal(${i})">
+                    <div class="photo-wrap"><img src="${h.p}" alt="${h.n}"></div>
+                    <div class="info">
+                        <div class="name">${h.n}</div>
+                        <div class="dates">${h.d}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openModal(index) {
+            const h = heroes[index];
+            document.getElementById('modalBody').innerHTML = `
+                <img src="${h.p}" class="modal-img">
+                <div class="modal-text">
+                    <h2>${h.n}</h2>
+                    <span class="bio-label">Годы жизни:</span>
+                    <div class="bio-content">${h.d}</div>
+                    <span class="bio-label">Награды:</span>
+                    <div class="bio-content">Орден Мужества (посмертно)</div>
+                    <span class="bio-label">Биография:</span>
+                    <div class="bio-content">${h.bio}</div>
+                </div>
+            `;
+            document.getElementById('modalOverlay').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('modalOverlay').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        render();
+    </script>
+</body>
+</html>
