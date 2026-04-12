@@ -4,273 +4,843 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Бессмертный полк | Голышмановская СОШ №2</title>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --gold: #ffcc00;
-            --dark-bg: #0d0f0d;
-            --card-bg: #1a1d1a;
-            --overlay: rgba(0, 0, 0, 0.98);
+            --gold: #c9a84c;
+            --gold-light: #f0d080;
+            --gold-dim: #7a6030;
+            --deep: #080a08;
+            --dark: #0e1210;
+            --card: #121812;
+            --card-border: #2a2e2a;
+            --text: #e8e0d0;
+            --text-dim: #a09880;
+            --red: #8b1a1a;
+            --overlay: rgba(4, 6, 4, 0.97);
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
+
+        html { scroll-behavior: smooth; }
 
         body {
-            background-color: var(--dark-bg);
-            color: #ffffff;
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            background-color: var(--deep);
+            color: var(--text);
+            font-family: 'Crimson Text', Georgia, serif;
             overflow-x: hidden;
         }
 
+        /* ── STARS BACKGROUND ── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: 
+                radial-gradient(1px 1px at 15% 20%, rgba(255,255,255,0.25) 0%, transparent 100%),
+                radial-gradient(1px 1px at 45% 60%, rgba(255,255,255,0.2) 0%, transparent 100%),
+                radial-gradient(1px 1px at 75% 35%, rgba(255,255,255,0.18) 0%, transparent 100%),
+                radial-gradient(1px 1px at 90% 80%, rgba(255,255,255,0.22) 0%, transparent 100%),
+                radial-gradient(1px 1px at 30% 88%, rgba(255,255,255,0.15) 0%, transparent 100%),
+                radial-gradient(1px 1px at 60% 10%, rgba(255,255,255,0.2) 0%, transparent 100%),
+                radial-gradient(1px 1px at 8% 55%, rgba(255,255,255,0.12) 0%, transparent 100%),
+                radial-gradient(1px 1px at 85% 15%, rgba(255,255,255,0.18) 0%, transparent 100%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ── HEADER ── */
         header {
+            position: relative;
             width: 100%;
-            padding: 30px 15px;
+            padding: 60px 20px 50px;
             text-align: center;
-            background: linear-gradient(to bottom, #1a2a1a, var(--dark-bg));
-            border-bottom: 2px solid var(--gold);
+            background: linear-gradient(180deg, #0a140a 0%, var(--deep) 100%);
+            border-bottom: 1px solid var(--gold-dim);
+            overflow: hidden;
+            z-index: 1;
         }
 
-        h1 { 
-            font-family: 'Oswald', sans-serif; 
-            font-size: 1.8rem; 
-            text-transform: uppercase; 
-            margin: 0;
-            line-height: 1.2;
+        header::before {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 50%; transform: translateX(-50%);
+            width: 80%; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
         }
 
-        .school { 
-            color: var(--gold); 
-            font-weight: bold; 
-            margin-top: 8px; 
-            font-size: 0.9rem;
-            letter-spacing: 0.5px;
+        .flame-icon {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 16px;
+            animation: flicker 3s ease-in-out infinite;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 5vw, 3.2rem);
+            font-weight: 900;
+            letter-spacing: 0.05em;
+            color: var(--gold-light);
+            text-shadow: 0 0 40px rgba(201,168,76,0.4), 0 2px 4px rgba(0,0,0,0.8);
+            line-height: 1.15;
+        }
+
+        .subtitle {
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(0.65rem, 2vw, 0.82rem);
+            font-weight: 300;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-top: 12px;
+        }
+
+        .header-divider {
+            width: 120px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+            margin: 20px auto 0;
+        }
+
+        .count-badge {
+            display: inline-block;
+            margin-top: 18px;
+            padding: 6px 18px;
+            border: 1px solid var(--gold-dim);
+            border-radius: 2px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold-dim);
+        }
+
+        /* ── GRID ── */
+        .grid-wrapper {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 50px 20px 80px;
         }
 
         .grid {
             display: grid;
-            /* Адаптивная сетка: 1 колонка на мобилках, больше на десктопе */
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 15px;
-            width: 95%;
-            max-width: 1200px;
-            padding: 20px 0;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 24px;
         }
 
+        /* ── CARD ── */
         .card {
-            background: var(--card-bg);
-            border-radius: 10px;
-            border: 1px solid #333;
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 4px;
             overflow: hidden;
             cursor: pointer;
-            transition: transform 0.2s;
             position: relative;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        /* На мобильных лучше не использовать тяжелый hover, только легкое нажатие */
+        .card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(201,168,76,0.04) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        @media (hover: hover) {
+            .card:hover {
+                transform: translateY(-5px);
+                border-color: var(--gold-dim);
+                box-shadow: 0 12px 40px rgba(0,0,0,0.6), 0 0 20px rgba(201,168,76,0.08);
+            }
+        }
+
         .card:active { transform: scale(0.98); }
 
         .photo-wrap {
             width: 100%;
-            height: 320px;
-            background: #222;
+            aspect-ratio: 3/4;
+            background: #1a1e1a;
+            position: relative;
+            overflow: hidden;
         }
 
         .photo-wrap img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            object-position: top center;
+            filter: sepia(20%) contrast(1.05);
+            transition: filter 0.4s ease, transform 0.4s ease;
         }
 
-        .info { padding: 12px; text-align: center; }
-        .name { font-family: 'Oswald', sans-serif; font-size: 1.1rem; margin-bottom: 4px; }
-        .dates { color: var(--gold); font-weight: bold; font-size: 0.8rem; }
+        @media (hover: hover) {
+            .card:hover .photo-wrap img {
+                filter: sepia(0%) contrast(1.1);
+                transform: scale(1.03);
+            }
+        }
 
-        /* МОДАЛЬНОЕ ОКНО ДЛЯ МОБИЛОК */
+        .photo-gradient {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 50%;
+            background: linear-gradient(to top, rgba(10,12,10,0.9) 0%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .rank-badge {
+            position: absolute;
+            top: 12px; left: 12px;
+            background: rgba(139,26,26,0.85);
+            border: 1px solid rgba(201,168,76,0.3);
+            padding: 3px 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.58rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--gold-light);
+            border-radius: 2px;
+        }
+
+        .card-info {
+            padding: 16px 14px 16px;
+            border-top: 1px solid var(--card-border);
+        }
+
+        .card-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1.3;
+            margin-bottom: 6px;
+        }
+
+        .card-dates {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.68rem;
+            letter-spacing: 0.08em;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .card-award {
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.6rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            line-height: 1.4;
+            padding-right: 0;
+        }
+
+        .award-dot {
+            width: 5px; height: 5px;
+            border-radius: 50%;
+            background: var(--gold);
+            flex-shrink: 0;
+            margin-top: 3px;
+        }
+
+        .card-read {
+            display: block;
+            margin-top: 12px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.6rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--gold-dim);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        @media (hover: hover) {
+            .card:hover .card-read { opacity: 1; }
+        }
+
+        /* ── MODAL ── */
         .modal-overlay {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            inset: 0;
             background: var(--overlay);
             display: none;
             z-index: 1000;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
+
+        .modal-overlay.active { display: flex; }
 
         .modal-content {
             width: 100%;
-            height: 100%;
-            background: #111;
-            position: relative;
+            min-height: 100%;
             display: flex;
             flex-direction: column;
-            overflow-y: auto;
+            position: relative;
         }
 
         .modal-close {
             position: fixed;
-            top: 15px; right: 15px;
-            font-size: 35px;
-            color: var(--gold);
-            width: 45px; height: 45px;
-            background: rgba(0,0,0,0.5);
+            top: 16px; right: 16px;
+            width: 44px; height: 44px;
+            background: rgba(10,14,10,0.85);
+            border: 1px solid var(--gold-dim);
             border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            z-index: 1100;
+            color: var(--gold);
+            font-size: 22px;
+            line-height: 1;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .modal-close:hover {
+            background: rgba(201,168,76,0.15);
+            border-color: var(--gold);
+        }
+
+        .modal-hero-header {
+            width: 100%;
+            background: linear-gradient(180deg, #0a120a 0%, var(--deep) 100%);
+            border-bottom: 1px solid var(--gold-dim);
+            padding: 60px 24px 36px;
+            text-align: center;
+            position: relative;
+        }
+
+        .modal-hero-header::before {
+            content: '✦';
+            display: block;
+            color: var(--gold-dim);
+            font-size: 1rem;
+            margin-bottom: 16px;
+            letter-spacing: 0.5em;
+        }
+
+        .modal-photo-frame {
+            width: 180px; height: 220px;
+            margin: 0 auto 24px;
+            border: 2px solid var(--gold-dim);
+            padding: 4px;
+            position: relative;
+        }
+
+        .modal-photo-frame::before, .modal-photo-frame::after {
+            content: '';
+            position: absolute;
+            width: 16px; height: 16px;
+            border-color: var(--gold);
+            border-style: solid;
+        }
+
+        .modal-photo-frame::before {
+            top: -6px; left: -6px;
+            border-width: 2px 0 0 2px;
+        }
+
+        .modal-photo-frame::after {
+            bottom: -6px; right: -6px;
+            border-width: 0 2px 2px 0;
+        }
+
+        .modal-photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+            filter: sepia(10%);
+            display: block;
+        }
+
+        .modal-name {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.4rem, 4vw, 2rem);
+            font-weight: 900;
+            color: var(--gold-light);
+            text-shadow: 0 0 30px rgba(201,168,76,0.3);
+            line-height: 1.2;
+            margin-bottom: 10px;
+        }
+
+        .modal-dates {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.78rem;
+            letter-spacing: 0.2em;
+            color: var(--text-dim);
+        }
+
+        .modal-divider {
+            width: 100px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+            margin: 16px auto 0;
+        }
+
+        /* ── MODAL BODY ── */
+        .modal-body {
+            padding: 40px 24px 60px;
+            max-width: 860px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .section-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.62rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--gold-dim), transparent);
+        }
+
+        .bio-text {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 1.1rem;
+            line-height: 1.85;
+            color: var(--text);
+            white-space: pre-line;
+        }
+
+        .bio-text p {
+            margin-bottom: 1.2em;
+            text-indent: 1.5em;
+        }
+
+        .bio-text p:first-child { text-indent: 0; }
+
+        .awards-block {
+            margin: 32px 0;
+            padding: 20px 22px;
+            background: rgba(201,168,76,0.04);
+            border: 1px solid rgba(201,168,76,0.15);
+            border-left: 3px solid var(--gold-dim);
+            border-radius: 2px;
+        }
+
+        .award-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 10px;
+            font-family: 'Crimson Text', serif;
+            font-size: 1.05rem;
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        .award-item:last-child { margin-bottom: 0; }
+
+        .award-star {
+            color: var(--gold);
+            flex-shrink: 0;
+            font-size: 0.9rem;
+            margin-top: 2px;
+        }
+
+        .eternal-memory {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 32px;
+            border-top: 1px solid var(--card-border);
+        }
+
+        .eternal-memory p {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-style: italic;
+            color: var(--gold-dim);
+            letter-spacing: 0.05em;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid var(--card-border);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.68rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+        }
+
+        footer span { color: var(--gold-dim); }
+
+        /* ── PLACEHOLDER PHOTO ── */
+        .photo-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #151a15 0%, #1e261e 100%);
+            color: var(--gold-dim);
+            font-size: 3rem;
+        }
+
+        /* ── NAV ── */
+        .modal-nav {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
             z-index: 1100;
         }
 
-        .modal-body {
-            padding: 20px;
-            padding-top: 60px; /* Отступ для кнопки закрытия */
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+        .nav-btn {
+            padding: 10px 22px;
+            background: rgba(10,14,10,0.9);
+            border: 1px solid var(--gold-dim);
+            color: var(--gold);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 2px;
+            transition: background 0.2s;
         }
 
-        .modal-img {
-            width: 100%;
-            max-width: 400px;
-            margin: 0 auto;
-            border-radius: 8px;
-            border: 1px solid var(--gold);
-        }
+        .nav-btn:hover { background: rgba(201,168,76,0.1); }
 
-        .modal-text { width: 100%; }
-        .modal-text h2 { font-family: 'Oswald'; color: var(--gold); font-size: 1.6rem; margin-top: 0; }
-        .bio-label { color: var(--gold); font-weight: bold; margin-top: 15px; display: block; font-size: 0.85rem; text-transform: uppercase; }
-        .bio-content { line-height: 1.6; color: #ddd; margin-top: 6px; font-size: 1rem; white-space: pre-line; }
-
-        /* Для планшетов и ПК увеличиваем шрифты и меняем раскладку окна */
         @media (min-width: 768px) {
-            h1 { font-size: 2.5rem; }
-            .modal-content {
-                width: 90%; height: auto; max-height: 90vh;
-                margin: auto; border-radius: 15px; border: 1px solid var(--gold);
-            }
-            .modal-body { flex-direction: row; align-items: flex-start; padding: 40px; }
-            .modal-img { width: 300px; }
-            .modal-close { position: absolute; }
+            .modal-hero-header { padding: 70px 40px 50px; }
+            .modal-photo-frame { width: 220px; height: 270px; }
+            .modal-body { padding: 50px 50px 80px; }
+            .bio-text { font-size: 1.15rem; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>Бессмертный полк СВО</h1>
-        <div class="school">МАОУ «ГОЛЫШМАНОВСКАЯ СОШ №2»</div>
-    </header>
+<header>
+    <span class="flame-icon">🕯</span>
+    <h1>Бессмертный полк СВО</h1>
+    <div class="subtitle">МАОУ «Голышмановская СОШ №2» · Голышманово</div>
+    <div class="header-divider"></div>
+    <div class="count-badge">9 героев — навсегда в наших сердцах</div>
+</header>
 
+<div class="grid-wrapper">
     <div class="grid" id="mainGrid"></div>
+</div>
 
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal-content">
-            <div class="modal-close" onclick="closeModal()">&times;</div>
-            <div class="modal-body" id="modalBody"></div>
+<footer>
+    <span>Вечная память</span> · МАОУ «Голышмановская СОШ №2» · Голышмановский округ
+</footer>
+
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal-content">
+        <div class="modal-close" onclick="closeModal()">✕</div>
+        <div id="modalInner"></div>
+        <div class="modal-nav">
+            <button class="nav-btn" onclick="changeHero(-1)">← Предыдущий</button>
+            <button class="nav-btn" onclick="changeHero(1)">Следующий →</button>
         </div>
     </div>
+</div>
 
-    <script>
-        const heroes = [
-            { 
-                n: "Щетков Иван Сергеевич", 
-                d: "07.02.1991 – 15.07.2022", 
-                p: "photo_2026-03-25_21-25-46.jpg",
-                bio: `Родился и вырос в посёлке Голышманово, учился в школе № 2. Окончил Тюменский железнодорожный колледж. Служил во Внутренних войсках МВД России.
+<script>
+const heroes = [
+    {
+        n: "Щетков Иван Сергеевич",
+        d: "07.02.1991 – 15.07.2022",
+        p: "photo_2026-03-25_21-25-46.jpg",
+        rank: "Прапорщик",
+        awards: [
+            "Орден Мужества (посмертно)",
+            "Медаль «За воинскую доблесть» II степени",
+            "Медаль «Участник манёвров войск «Восток-2018»",
+            "Медаль «Участник ликвидации последствий ЧС на реке Бурея»"
+        ],
+        bio: `Иван родился 7 февраля 1991 года в посёлке Голышманово Тюменской области. Первая учительница Антипина Надежда Сергеевна вспоминает о нём как о дисциплинированном, ответственном мальчике — физически развитом и трудолюбивом. В школе он отвечал за спортивную работу: ни одно мероприятие не обходилось без его участия. Иван был бессменным участником игры «Зарница», и школа неизменно занимала первые места.
 
-                Решение о службе по контракту принял как настоящий патриот. Награждён медалями «Участник манёвров войск «Восток-2018», «За воинскую доблесть» II степени.
+Самыми любимыми предметами были ОБЖ и физкультура. Пользовался заслуженным авторитетом в классе, имел близких друзей — Хильченко Александра и Лещёва Диму. «Почему выбрал служить? Наверное, переживал, кто будет защищать Родину, и искренне считал это престижным», — вспоминал его друг.
 
-                Погиб героически в ходе спецоперации в Донбассе. Награждён орденом Мужества посмертно. В памяти друзей остался добрым парнем, который любил говорить: «Зато будет, что вспомнить!»`
-            },
-            { 
-                n: "Андреев Максим Олегович", 
-                d: "25.12.2000 – 30.09.2023", 
-                p: "photo_2026-03-25_21-23-37.jpg",
-                bio: `Выпускник школы № 2. С детства занимался гиревым спортом, кандидат в мастера спорта. Учился в ТВВИКУ.
+В 2007 году Иван поступил в Тюменский железнодорожный колледж на электромонтёра пути и за три года освоил профессию. Затем служил во Внутренних войсках МВД России в Хабаровском крае. Вернулся домой, женился, с супругой Натальей воспитывали дочь.
 
-                Был мобилизован и с доблестью защищал Родину. Погиб при исполнении воинского долга. Максим был мужественным воином и целеустремленным человеком, настоящим Героем нашего времени.`
-            },
-            { 
-                n: "Хафизов Александр Наилевич", 
-                d: "15.01.1997 – 30.09.2023", 
-                p: "photo_2026-03-25_21-23-55.jpg",
-                bio: "Выпускник школы №2. Профессиональный военный. Погиб, выполняя боевую задачу. Награжден орденом Мужества посмертно."
-            },
-            { 
-                n: "Катков Никита Сергеевич", 
-                d: "19.03.2003 – 26.07.2024", 
-                p: "photo_2026-03-25_21-23-19.jpg",
-                bio: "Самый молодой герой школы. Отправился на СВО по зову сердца. Проявил отвагу и верность присяге. Кавалер ордена Мужества."
-            },
-            { 
-                n: "Обухов Сергей Владимирович", 
-                d: "04.07.1996 – 24.04.2025", 
-                p: "photo_2026-03-25_21-25-49.jpg",
-                bio: "Выпускник школы №2. Честный и надежный товарищ. Погиб при защите интересов Отечества. Награжден орденом Мужества."
-            },
-            { 
-                n: "Бециев Умар Хумидович", 
-                d: "26.11.1977 – 08.08.2024", 
-                p: "photo_2026-03-25_21-24-37.jpg",
-                bio: "Ветеран боевых действий, пример стойкости. Погиб как герой в зоне СВО. Вечная память выпускнику нашей школы."
-            },
-            { 
-                n: "Граф Андрей Евгеньевич", 
-                d: "03.12.1991 – 25.02.2025", 
-                p: "photo_2026-03-25_21-24-20.jpg",
-                bio: "Награжден орденом Мужества посмертно за исключительную храбрость в ходе выполнения боевых задач."
-            },
-            { 
-                n: "Горбань Алексей Сергеевич", 
-                d: "10.03.1986 – 29.04.2025", 
-                p: "photo_2026-03-25_21-23-02.jpg",
-                bio: "Профессиональный защитник, пал смертью храбрых в зоне спецоперации. Его имя навсегда в истории Голышмановского округа."
-            },
-            { 
-                n: "Зокиров Дильшод Файзуллоевич", 
-                d: "24.01.2001 – 10.10.2023", 
-                p: "photo_2026-03-25_21-22-39.jpg",
-                bio: "Молодой боец, отдавший жизнь за мирное будущее. Был добрым и отзывчивым парнем. Кавалер ордена Мужества."
-            }
-        ];
+Решение о военной службе по контракту Иван принял не сразу: полтора года раздумывал, но как патриот сделал выбор служить Родине. В 2015 году подписал контракт в воинской части 30763 с. Вятского Хабаровского края. По долгу службы отучился на кинолога, в декабре 2021 года получил звание прапорщика.
 
-        function render() {
-            document.getElementById('mainGrid').innerHTML = heroes.map((h, i) => `
-                <div class="card" onclick="openModal(${i})">
-                    <div class="photo-wrap"><img src="${h.p}" alt="${h.n}"></div>
-                    <div class="info">
-                        <div class="name">${h.n}</div>
-                        <div class="dates">${h.d}</div>
-                    </div>
-                </div>
-            `).join('');
-        }
+В январе 2022 года отправился в зону проведения СВО, был назначен командиром отделения. Погиб при исполнении воинского долга в Донбассе.
 
-        function openModal(index) {
-            const h = heroes[index];
-            document.getElementById('modalBody').innerHTML = `
-                <img src="${h.p}" class="modal-img">
-                <div class="modal-text">
-                    <h2>${h.n}</h2>
-                    <span class="bio-label">Годы жизни:</span>
-                    <div class="bio-content">${h.d}</div>
-                    <span class="bio-label">Награды:</span>
-                    <div class="bio-content">Орден Мужества (посмертно)</div>
-                    <span class="bio-label">Биография:</span>
-                    <div class="bio-content">${h.bio}</div>
-                </div>
-            `;
-            document.getElementById('modalOverlay').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
+Классный руководитель Татьяна Ивановна Ершова вспоминает: «В памяти Иван останется таким, каким был: добрым, скромным, отзывчивым и целеустремлённым. Трудно осознать, что Ивана нет с нами — и в то же время гордимся настоящим патриотом и защитником Родины!»
 
-        function closeModal() {
-            document.getElementById('modalOverlay').style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
+В памяти друзей он навсегда останется добрым, улыбчивым парнем, который часто говорил: «Зато будет, что вспомнить!»`
+    },
+    {
+        n: "Андреев Максим Олегович",
+        d: "25.12.2000 – 30.09.2023",
+        p: "photo_2026-03-25_21-23-37.jpg",
+        rank: "Рядовой",
+        awards: [
+            "Орден Мужества (посмертно)",
+            "КМС по гиревому спорту (присвоено 16.03.2018)"
+        ],
+        bio: `Максим родился 25 декабря 2000 года в посёлке Голышманово. Учился в школе №2, с самой школьной скамьи занимался гиревым спортом и участвовал во всех спортивных соревнованиях. Был упорным, целеустремлённым, выдержанным, дисциплинированным — именно эти черты характера помогали ему добиваться успехов.
 
-        render();
-    </script>
+Продолжил образование в Тюменском высшем военно-инженерном командном училище. 6 февраля 2019 года в составе команды ТВВИКУ выступал в Москве на Кубке Вооружённых сил РФ по гиревому спорту и занял второе место.
+
+Спортивные достижения Максима: ноябрь 2014 — 2-е место на турнире Заводоуковского г.о.; октябрь 2015 — 1-е место на XIX Спартакиаде учащихся Тюменской области; февраль 2016 — 3-е место на первенстве России (Барнаул); октябрь 2016 — 1-е место на XX Спартакиаде учащихся Тюменской области; февраль 2017 — 3-е место на первенстве России; май 2018 — 6-е место на чемпионате России (Санкт-Петербург). 16 марта 2018 года Максиму присвоено звание кандидата в мастера спорта.
+
+22-летний Максим попал на специальную военную операцию по мобилизации. Исполняя воинский долг, показал пример мужества и самоотверженности — до конца оставался верным воинской присяге.
+
+30 сентября 2023 года Максим Андреев погиб при выполнении боевой задачи. Он был так воспитан и поступить по-другому не мог.`
+    },
+    {
+        n: "Хафизов Александр Наилевич",
+        d: "15.01.1997 – 30.09.2023",
+        p: "photo_2026-03-25_21-23-55.jpg",
+        rank: "Рядовой",
+        awards: [
+            "Орден Мужества (посмертно)"
+        ],
+        bio: `Александр родился 15 января 1997 года. Учился в школе №2, где его классным руководителем был Дьяков Вадим Викторович. Педагог вспоминает о нём как о хорошем человеке — спокойном и рассудительном. Александр всегда поступал по совести, справедливо. Ко всему относился серьёзно: любое поручение старался выполнять качественно и в срок.
+
+Со школьной скамьи он был добрым, общительным, весёлым — всегда поддерживал любые инициативы. Одноклассники и учителя отмечали его вежливость и отзывчивость.
+
+После окончания школы был призван в ряды Вооружённых сил России для прохождения срочной службы. Стал профессиональным военным. В зону СВО Александр был направлен осенью 2022 года.
+
+У Александра осталась жена и двое маленьких детей. В семье о нём вспоминают как об особенном отце, который не чаял души в своих детях и был готов на всё, чтобы сделать их счастливыми. Друзья помнят его добрым человеком и отличным товарищем, который мог выручить в любой ситуации.
+
+30 сентября 2023 года Хафизов Александр Наилевич погиб в ходе выполнения боевой задачи, отстаивая безопасность нашего многонационального народа, его право на жизнь и самоопределение.
+
+Светлая память об Александре навсегда сохранится в сердцах земляков.`
+    },
+    {
+        n: "Катков Никита Сергеевич",
+        d: "19.03.2003 – 26.07.2024",
+        p: "photo_2026-03-25_21-23-19.jpg",
+        rank: "Ефрейтор",
+        awards: [
+            "Орден Мужества (посмертно)"
+        ],
+        bio: `Никита — самый молодой из героев нашей школы. Родился 19 марта 2003 года. Обучался в МАОУ «Голышмановская СОШ №2». Со школьной скамьи был отзывчивым, неравнодушным, общительным — всегда готов был прийти на помощь.
+
+После окончания школы продолжил обучение в Голышмановском агропедагогическом колледже. Однако зов долга оказался сильнее.
+
+В зону специальной военной операции Никита был направлен в июле 2023 года. Нёс службу в звании ефрейтора в в/ч 11741 25-й армии 169-й бригады инженерно-сапёрных войск.
+
+На службе проявил себя как настоящий защитник Отечества — мужественным и верным воинской присяге до последнего. Отправился на СВО по зову сердца — не из страха или приказа, а из глубокой убеждённости в правоте своего выбора.
+
+26 июля 2024 года Никита погиб при исполнении воинского долга. Он с доблестью защищал нашу Родину и до конца оставался верен присяге.`
+    },
+    {
+        n: "Обухов Сергей Владимирович",
+        d: "04.07.1996 – 24.04.2025",
+        p: "photo_2026-03-25_21-25-49.jpg",
+        rank: "Сержант",
+        awards: [
+            "Орден Мужества (посмертно)",
+            "Медаль «За разминирование» (24.05.2024)",
+            "Медаль «Участнику специальной военной операции» (08.06.2024)"
+        ],
+        bio: `Сергей родился 4 июля 1996 года в р.п. Голышманово. Был добрым, общительным ребёнком. Посещал детский сад «Ёлочка», любил заучивать стихотворения и выступать на мероприятиях. В школу пошёл в шесть лет с большим желанием. Учился в общеобразовательной школе №2. Очень увлёкся футболом под руководством тренера Загашвили Гурама Васильевича, играл в команде вратарём, с энтузиазмом участвовал в командных соревнованиях.
+
+В 2011 году окончил школу, а в 2014 году освоил профессию тракториста-машиниста сельскохозяйственного производства. С 2018 года работал в «Тюменской авиабазе», участвовал в тушении лесных пожаров на территории Голышмановского района и за его пределами, был руководителем тушения пожаров, удостоен грамот и благодарственных писем.
+
+3 мая 2023 года Сергей ушёл добровольцем в зону проведения СВО. Служил в 25-й армии 9-го инженерно-сапёрного полка Московского военного округа (в/ч 43784), был командиром отделения.
+
+24 мая 2024 года, рискуя жизнью, Сергей разминировал дорогу и вывел из заминированного района более десяти сослуживцев. За этот подвиг он был удостоен медали «За разминирование».
+
+13 мая 2024 года, при активности противника, проявил высокую бдительность и хладнокровие при охране понтонной переправы — не допустил на стратегический объект посторонних лиц. Является ветераном боевых действий.
+
+24 апреля 2025 года Сергей Обухов погиб при выполнении боевой задачи. Он был женат и воспитывал двоих детей.`
+    },
+    {
+        n: "Бециев Умар Хумидович",
+        d: "26.11.1977 – 08.08.2024",
+        p: "photo_2026-03-25_21-24-37.jpg",
+        rank: "Гвардии рядовой",
+        awards: [
+            "Почётный знак «Гвардия»"
+        ],
+        bio: `Умар родился 26 ноября 1977 года в посёлке Голышманово. Обучался в Голышмановской средней школе №2. В дальнейшем окончил Голышмановский агропедагогический колледж. Всегда отличался доброжелательностью, отзывчивостью и справедливым нравом.
+
+Умар Хумидович прожил достойную жизнь честного человека и труженика. В июле 2024 года, в возрасте 46 лет, принял мужественное решение — заключил контракт с Министерством обороны Российской Федерации и встал в строй защитников Отечества.
+
+Был назначен наводчиком мотострелкового отделения мотострелкового взвода 74-й мотострелковой бригады.
+
+8 августа 2024 года гвардии рядовой Бециев Умар Хумидович погиб, попав под миномётный обстрел противника, при выполнении поставленной задачи в составе штурмовой группы в районе населённого пункта Гродовка Донецкой Народной Республики. Самоотверженно исполнил свой воинский долг до конца.
+
+Вечная память выпускнику нашей школы.`
+    },
+    {
+        n: "Граф Андрей Евгеньевич",
+        d: "03.12.1991 – 25.02.2025",
+        p: "photo_2026-03-25_21-24-20.jpg",
+        rank: "Младший сержант",
+        awards: [
+            "Орден Мужества (посмертно)",
+            "Почётный знак «Гвардия»",
+            "Медаль «За воинскую доблесть»"
+        ],
+        bio: `Андрей родился 3 декабря 1991 года в деревне Глубокая Голышмановского района Тюменской области. Всю жизнь прожил в р.п. Голышманово. После обучения в МАОУ «Голышмановская СОШ №2» выучился на электромонтёра. Ездил на Север, выполнял опасную работу на высоте. В свободное время увлекался рыбалкой и активным отдыхом. Андрей всегда был душой компании.
+
+В 2022 году познакомился со своей супругой Ольгой. В браке родились две прекрасные дочки.
+
+20 января 2024 года Андрей подписал контракт с Министерством обороны РФ. В течение года был штурмовиком — находился в самых горячих точках, неоднократно выносил тяжело раненых солдат с поля боя. Сам был ранен. После ранения служил при военной части в г. Чебаркуль, но не смог оставить ребят и добился возвращения в боевые ряды.
+
+Был назначен командиром медицинского отделения медицинского взвода стрелкового батальона в/ч №89547. Получил звание младшего сержанта.
+
+29 января 2025 года ушёл на очередное боевое задание, откуда больше не вернулся. Андрей Евгеньевич погиб 25 февраля 2025 года.
+
+Его сослуживцы и сегодня пишут слова благодарности за спасённые жизни. Дома его ждали родители, жена, дети, родные и друзья — все ждали только с Победой.
+
+Похоронен 9 мая 2025 года в р.п. Голышманово.`
+    },
+    {
+        n: "Горбань Алексей Сергеевич",
+        d: "10.03.1986 – 29.04.2025",
+        p: "photo_2026-03-25_21-23-02.jpg",
+        rank: "Контрактник",
+        awards: [
+            "Орден Мужества (посмертно)"
+        ],
+        bio: `Алексей родился 10 марта 1986 года. Уже в шесть лет, в 1992 году, пошёл учиться в первый класс. После окончания школы поступил в профессиональное училище №33 города Голышманово, где получил профессию водителя.
+
+Работал преимущественно на Севере. Проявлял страсть к автомобилям и демонстрировал золотые руки — Алексей мог починить практически любую технику. Всегда отличался отзывчивостью и готовностью прийти на помощь близким, щедро делясь теплом и добротой. Был прекрасным сыном, братом, мужем и отцом.
+
+В 2010 году вступил в брак, создав крепкую семью.
+
+В мае 2023 года заключил контракт сроком на два года, который должен был завершиться в мае 2025 года. Служил с честью, профессионально и самоотверженно.
+
+Однако судьба распорядилась иначе — 29 апреля 2025 года Алексей трагически погиб при выполнении боевой задачи в зоне специальной военной операции. У него осталось пятеро детей.
+
+Его имя навсегда останется в истории Голышмановского округа.`
+    },
+    {
+        n: "Зокиров Дильшод Файзуллоевич",
+        d: "24.01.2001 – 10.10.2023",
+        p: "photo_2026-03-25_21-22-39.jpg",
+        rank: "Контрактник",
+        awards: [
+            "Орден Мужества (посмертно)"
+        ],
+        bio: `Дильшод родился 24 января 2001 года. С детства грезил армией — не парадами и погонами, а суровой мужской работой, чувством долга и ответственности перед Родиной. Его характер закалялся не только мечтами, но и железом: с юных лет он серьёзно занимался гиревым спортом, собрал множество грамот и медалей с городских, областных соревнований и даже чемпионатов страны. Эта закалка воспитала в нём несгибаемую волю и умение бороться до конца.
+
+Именно эта внутренняя убеждённость привела его к смелому решению: за месяц до защиты диплома механика он бросил учёбу и ушёл на срочную службу. Для него всё было просто: есть долг, а остальное подождёт.
+
+Служба началась в танковых войсках. Он оказался прирождённым механиком-водителем, чувствуя многотонную машину как продолжение себя. Командование быстро разглядело в спокойном и рассудительном парне лидерские качества — не прошло и года, как он подписал контракт.
+
+Когда началась специальная военная операция, его бригада была одной из первых, кто вступил в бой. Он прошёл через всё: тяжёлые наступательные бои и изматывающие оборонительные операции.
+
+10 октября 2023 года Дильшод Зокиров погиб, до конца оставаясь верным своему долгу.`
+    }
+];
+
+let currentIndex = 0;
+
+function render() {
+    document.getElementById('mainGrid').innerHTML = heroes.map((h, i) => `
+        <div class="card" onclick="openModal(${i})">
+            <div class="photo-wrap">
+                <img src="${h.p}" alt="${h.n}" onerror="this.parentElement.innerHTML='<div class=\\'photo-placeholder\\'>✦</div>'">
+                <div class="photo-gradient"></div>
+                <div class="rank-badge">${h.rank}</div>
+            </div>
+            <div class="card-info">
+                <div class="card-name">${h.n}</div>
+                <div class="card-dates">${h.d}</div>
+                <div class="card-award"><span class="award-dot"></span>${h.awards[0]}</div>
+                <div class="card-read">Читать биографию →</div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function renderModal(index) {
+    const h = heroes[index];
+    const awardsHtml = h.awards.map(a => `
+        <div class="award-item"><span class="award-star">★</span>${a}</div>
+    `).join('');
+
+    document.getElementById('modalInner').innerHTML = `
+        <div class="modal-hero-header">
+            <div class="modal-photo-frame">
+                <img src="${h.p}" alt="${h.n}" onerror="this.src='';this.parentElement.innerHTML='<div class=\\'photo-placeholder\\' style=\\'width:100%;height:100%\\'>✦</div>'">
+            </div>
+            <div class="modal-name">${h.n}</div>
+            <div class="modal-dates">${h.d}</div>
+            <div class="modal-divider"></div>
+        </div>
+        <div class="modal-body">
+            <div class="section-label">Воинское звание</div>
+            <div class="bio-text" style="margin-bottom:28px; font-size:1rem;">${h.rank}</div>
+
+            <div class="section-label">Награды</div>
+            <div class="awards-block">${awardsHtml}</div>
+
+            <div class="section-label">Биография</div>
+            <div class="bio-text">${h.bio.trim().split('\n\n').map(p => `<p>${p.trim()}</p>`).join('')}</div>
+
+            <div class="eternal-memory">
+                <p>Светлая память. Вечный герой.</p>
+            </div>
+        </div>
+    `;
+}
+
+function openModal(index) {
+    currentIndex = index;
+    renderModal(index);
+    const overlay = document.getElementById('modalOverlay');
+    overlay.classList.add('active');
+    overlay.scrollTop = 0;
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+function changeHero(dir) {
+    currentIndex = (currentIndex + dir + heroes.length) % heroes.length;
+    renderModal(currentIndex);
+    document.getElementById('modalOverlay').scrollTop = 0;
+}
+
+document.getElementById('modalOverlay').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+});
+
+document.addEventListener('keydown', function(e) {
+    const overlay = document.getElementById('modalOverlay');
+    if (!overlay.classList.contains('active')) return;
+    if (e.key === 'Escape') closeModal();
+    if (e.key === 'ArrowLeft') changeHero(-1);
+    if (e.key === 'ArrowRight') changeHero(1);
+});
+
+render();
+</script>
 </body>
 </html>
