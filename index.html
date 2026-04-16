@@ -31,7 +31,7 @@
             overflow-x: hidden;
         }
 
-        /* ── STARS BACKGROUND ── */
+        /* STARFIELD */
         body::before {
             content: '';
             position: fixed;
@@ -49,7 +49,6 @@
             z-index: 0;
         }
 
-        /* ── HEADER ── */
         header {
             position: relative;
             width: 100%;
@@ -121,14 +120,13 @@
             color: var(--gold-dim);
         }
 
-        /* ── GRID ── */
         .grid-wrapper {
             position: relative;
             z-index: 1;
             width: 100%;
             max-width: 1300px;
             margin: 0 auto;
-            padding: 50px 20px 80px;
+            padding: 50px 20px 60px;
         }
 
         .grid {
@@ -137,7 +135,7 @@
             gap: 24px;
         }
 
-        /* ── CARD ── */
+        
         .card {
             background: var(--card);
             border: 1px solid var(--card-border);
@@ -271,7 +269,7 @@
             .card:hover .card-read { opacity: 1; }
         }
 
-        /* ── MODAL ── */
+        
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -390,7 +388,6 @@
             margin: 16px auto 0;
         }
 
-        /* ── MODAL BODY ── */
         .modal-body {
             padding: 40px 24px 60px;
             max-width: 860px;
@@ -476,7 +473,155 @@
             letter-spacing: 0.05em;
         }
 
-        /* ── FOOTER ── */
+        /* FEEDBACK BUTTON (LINK) */
+        .feedback-trigger {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: center;
+            margin: 0 auto 30px;
+        }
+        .feedback-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 32px;
+            border: 1px solid var(--gold-dim);
+            background: rgba(10,14,10,0.7);
+            backdrop-filter: blur(2px);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--gold-light);
+            text-decoration: none;
+            border-radius: 2px;
+            transition: background 0.25s, border-color 0.25s, transform 0.2s;
+            cursor: pointer;
+        }
+        .feedback-link:hover {
+            background: rgba(201,168,76,0.12);
+            border-color: var(--gold);
+            transform: translateY(-2px);
+        }
+        .feedback-link span { font-size: 1.2rem; }
+
+        
+        .form-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: var(--overlay);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        .form-modal.active {
+            display: flex;
+        }
+        .form-modal-card {
+            max-width: 580px;
+            width: 100%;
+            background: var(--card);
+            border: 1px solid var(--gold-dim);
+            border-radius: 8px;
+            position: relative;
+            margin: auto;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+        }
+        .form-modal-close {
+            position: absolute;
+            top: 14px; right: 18px;
+            background: none;
+            border: none;
+            color: var(--gold-dim);
+            font-size: 24px;
+            cursor: pointer;
+            line-height: 1;
+            transition: color 0.2s;
+        }
+        .form-modal-close:hover { color: var(--gold); }
+        .form-modal-header {
+            padding: 28px 28px 8px;
+            border-bottom: 1px solid var(--card-border);
+        }
+        .form-modal-header h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--gold-light);
+            letter-spacing: 0.02em;
+        }
+        .form-modal-body {
+            padding: 24px 28px 32px;
+        }
+        .inline-form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 20px;
+        }
+        .inline-form-group label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+        }
+        .inline-form-group input, 
+        .inline-form-group textarea, 
+        .inline-form-group select {
+            background: #0e1410;
+            border: 1px solid var(--card-border);
+            border-radius: 2px;
+            color: var(--text);
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 0.95rem;
+            padding: 10px 12px;
+            outline: none;
+        }
+        .inline-form-group input:focus, 
+        .inline-form-group textarea:focus {
+            border-color: var(--gold-dim);
+        }
+        .form-row-double {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .submit-btn {
+            margin-top: 16px;
+            padding: 12px 24px;
+            background: transparent;
+            border: 1px solid var(--gold-dim);
+            color: var(--gold);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.2s;
+            width: 100%;
+        }
+        .submit-btn:hover {
+            background: rgba(201,168,76,0.12);
+            border-color: var(--gold);
+            color: var(--gold-light);
+        }
+        .form-success-message {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background: rgba(201,168,76,0.05);
+            border: 1px solid var(--gold-dim);
+            border-radius: 4px;
+            margin-top: 16px;
+        }
+        .form-success-message.show {
+            display: block;
+        }
+
         footer {
             position: relative;
             z-index: 1;
@@ -489,10 +634,8 @@
             text-transform: uppercase;
             color: var(--text-dim);
         }
-
         footer span { color: var(--gold-dim); }
 
-        /* ── PLACEHOLDER PHOTO ── */
         .photo-placeholder {
             width: 100%;
             height: 100%;
@@ -504,7 +647,6 @@
             font-size: 3rem;
         }
 
-        /* ── NAV ── */
         .modal-nav {
             position: fixed;
             bottom: 20px;
@@ -514,7 +656,6 @@
             gap: 12px;
             z-index: 1100;
         }
-
         .nav-btn {
             padding: 10px 22px;
             background: rgba(10,14,10,0.9);
@@ -528,7 +669,6 @@
             border-radius: 2px;
             transition: background 0.2s;
         }
-
         .nav-btn:hover { background: rgba(201,168,76,0.1); }
 
         @media (min-width: 768px) {
@@ -553,6 +693,13 @@
     <div class="grid" id="mainGrid"></div>
 </div>
 
+
+<div class="feedback-trigger">
+    <div class="feedback-link" id="openFormBtn">
+        <span>✧</span> Поделиться памятью / Предложить героя <span>✧</span>
+    </div>
+</div>
+
 <footer>
     <span>Вечная память</span> · МАОУ «Голышмановская СОШ №2» · Голышмановский округ
 </footer>
@@ -568,7 +715,66 @@
     </div>
 </div>
 
+<!-- МОДАЛЬНОЕ ОКНО С ФОРМОЙ (ОТПРАВКА НА EMAIL через formsubmit.co) -->
+<div id="feedbackModal" class="form-modal">
+    <div class="form-modal-card">
+        <button class="form-modal-close" id="closeFormBtn">✕</button>
+        <div class="form-modal-header">
+            <h3>Сохраним память вместе</h3>
+        </div>
+        <div class="form-modal-body">
+            <form id="contactForm" action="https://formsubmit.co/akkb351@gmail.com" method="POST" target="_blank">
+                <input type="hidden" name="_subject" value="Новое сообщение с сайта Бессмертный полк">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_next" value="https://ваш-сайт.ру/спасибо.html">
+                
+                <div class="inline-form-group">
+                    <label>Тип обращения</label>
+                    <select name="Тип" required>
+                        <option value="idea">Предложить идею для сайта</option>
+                        <option value="hero">Добавить информацию о герое</option>
+                        <option value="other">Другое</option>
+                    </select>
+                </div>
+                
+                <div class="form-row-double">
+                    <div class="inline-form-group">
+                        <label>Ваше имя *</label>
+                        <input type="text" name="Имя" required placeholder="Иванова Анна">
+                    </div>
+                    <div class="inline-form-group">
+                        <label>Email или телефон</label>
+                        <input type="text" name="Контакт" placeholder="email@example.com или телефон">
+                    </div>
+                </div>
+
+                <div class="inline-form-group">
+                    <label>ФИО героя (если есть)</label>
+                    <input type="text" name="ФИО_героя" placeholder="Иванов Иван Иванович">
+                </div>
+                
+                <div class="inline-form-group">
+                    <label>Ваше сообщение / предложение *</label>
+                    <textarea name="Сообщение" rows="5" required placeholder="Опишите вашу идею, расскажите о герое, поделитесь биографией или наградами..."></textarea>
+                </div>
+                
+                <div class="inline-form-group">
+                    <label>Дополнительные сведения (награды, годы жизни)</label>
+                    <textarea name="Детали" rows="3" placeholder="Любые уточняющие данные, которые помогут дополнить страницу героя"></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">Отправить →</button>
+                <div id="localSuccessMsg" class="form-success-message">
+                    <span>✨ Спасибо! Сообщение отправлено.</span><br>
+                    <small style="color: var(--text-dim);">Мы свяжемся с вами при необходимости</small>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script>
+
 const heroes = [
     {
         n: "Щетков Иван Сергеевич",
@@ -600,10 +806,7 @@ const heroes = [
         d: "25.12.2000 – 30.09.2023",
         p: "photo_2026-03-25_21-23-37.jpg",
         rank: "Рядовой",
-        awards: [
-            "Орден Мужества (посмертно)",
-            "КМС по гиревому спорту (присвоено 16.03.2018)"
-        ],
+        awards: ["Орден Мужества (посмертно)","КМС по гиревому спорту (присвоено 16.03.2018)"],
         bio: `Максим родился 25 декабря 2000 года в посёлке Голышманово. Учился в школе №2, с самой школьной скамьи занимался гиревым спортом и участвовал во всех спортивных соревнованиях. Был упорным, целеустремлённым, выдержанным, дисциплинированным — именно эти черты характера помогали ему добиваться успехов.
 
 Продолжил образование в Тюменском высшем военно-инженерном командном училище. 6 февраля 2019 года в составе команды ТВВИКУ выступал в Москве на Кубке Вооружённых сил РФ по гиревому спорту и занял второе место.
@@ -619,9 +822,7 @@ const heroes = [
         d: "15.01.1997 – 30.09.2023",
         p: "photo_2026-03-25_21-23-55.jpg",
         rank: "Рядовой",
-        awards: [
-            "Орден Мужества (посмертно)"
-        ],
+        awards: ["Орден Мужества (посмертно)"],
         bio: `Александр родился 15 января 1997 года. Учился в школе №2, где его классным руководителем был Дьяков Вадим Викторович. Педагог вспоминает о нём как о хорошем человеке — спокойном и рассудительном. Александр всегда поступал по совести, справедливо. Ко всему относился серьёзно: любое поручение старался выполнять качественно и в срок.
 
 Со школьной скамьи он был добрым, общительным, весёлым — всегда поддерживал любые инициативы. Одноклассники и учителя отмечали его вежливость и отзывчивость.
@@ -639,9 +840,7 @@ const heroes = [
         d: "19.03.2003 – 26.07.2024",
         p: "photo_2026-03-25_21-23-19.jpg",
         rank: "Ефрейтор",
-        awards: [
-            "Орден Мужества (посмертно)"
-        ],
+        awards: ["Орден Мужества (посмертно)"],
         bio: `Никита — самый молодой из героев нашей школы. Родился 19 марта 2003 года. Обучался в МАОУ «Голышмановская СОШ №2». Со школьной скамьи был отзывчивым, неравнодушным, общительным — всегда готов был прийти на помощь.
 
 После окончания школы продолжил обучение в Голышмановском агропедагогическом колледже. Однако зов долга оказался сильнее.
@@ -657,11 +856,7 @@ const heroes = [
         d: "04.07.1996 – 24.04.2025",
         p: "photo_2026-03-25_21-25-49.jpg",
         rank: "Сержант",
-        awards: [
-            "Орден Мужества (посмертно)",
-            "Медаль «За разминирование» (24.05.2024)",
-            "Медаль «Участнику специальной военной операции» (08.06.2024)"
-        ],
+        awards: ["Орден Мужества (посмертно)","Медаль «За разминирование» (24.05.2024)","Медаль «Участнику специальной военной операции» (08.06.2024)"],
         bio: `Сергей родился 4 июля 1996 года в р.п. Голышманово. Был добрым, общительным ребёнком. Посещал детский сад «Ёлочка», любил заучивать стихотворения и выступать на мероприятиях. В школу пошёл в шесть лет с большим желанием. Учился в общеобразовательной школе №2. Очень увлёкся футболом под руководством тренера Загашвили Гурама Васильевича, играл в команде вратарём, с энтузиазмом участвовал в командных соревнованиях.
 
 В 2011 году окончил школу, а в 2014 году освоил профессию тракториста-машиниста сельскохозяйственного производства. С 2018 года работал в «Тюменской авиабазе», участвовал в тушении лесных пожаров на территории Голышмановского района и за его пределами, был руководителем тушения пожаров, удостоен грамот и благодарственных писем.
@@ -679,9 +874,7 @@ const heroes = [
         d: "26.11.1977 – 08.08.2024",
         p: "photo_2026-03-25_21-24-37.jpg",
         rank: "Гвардии рядовой",
-        awards: [
-            "Почётный знак «Гвардия»"
-        ],
+        awards: ["Почётный знак «Гвардия»"],
         bio: `Умар родился 26 ноября 1977 года в посёлке Голышманово. Обучался в Голышмановской средней школе №2. В дальнейшем окончил Голышмановский агропедагогический колледж. Всегда отличался доброжелательностью, отзывчивостью и справедливым нравом.
 
 Умар Хумидович прожил достойную жизнь честного человека и труженика. В июле 2024 года, в возрасте 46 лет, принял мужественное решение — заключил контракт с Министерством обороны Российской Федерации и встал в строй защитников Отечества.
@@ -697,11 +890,7 @@ const heroes = [
         d: "03.12.1991 – 25.02.2025",
         p: "photo_2026-03-25_21-24-20.jpg",
         rank: "Младший сержант",
-        awards: [
-            "Орден Мужества (посмертно)",
-            "Почётный знак «Гвардия»",
-            "Медаль «За воинскую доблесть»"
-        ],
+        awards: ["Орден Мужества (посмертно)","Почётный знак «Гвардия»","Медаль «За воинскую доблесть»"],
         bio: `Андрей родился 3 декабря 1991 года в деревне Глубокая Голышмановского района Тюменской области. Всю жизнь прожил в р.п. Голышманово. После обучения в МАОУ «Голышмановская СОШ №2» выучился на электромонтёра. Ездил на Север, выполнял опасную работу на высоте. В свободное время увлекался рыбалкой и активным отдыхом. Андрей всегда был душой компании.
 
 В 2022 году познакомился со своей супругой Ольгой. В браке родились две прекрасные дочки.
@@ -721,9 +910,7 @@ const heroes = [
         d: "10.03.1986 – 29.04.2025",
         p: "photo_2026-03-25_21-23-02.jpg",
         rank: "Контрактник",
-        awards: [
-            "Орден Мужества (посмертно)"
-        ],
+        awards: ["Орден Мужества (посмертно)"],
         bio: `Алексей родился 10 марта 1986 года. Уже в шесть лет, в 1992 году, пошёл учиться в первый класс. После окончания школы поступил в профессиональное училище №33 города Голышманово, где получил профессию водителя.
 
 Работал преимущественно на Севере. Проявлял страсть к автомобилям и демонстрировал золотые руки — Алексей мог починить практически любую технику. Всегда отличался отзывчивостью и готовностью прийти на помощь близким, щедро делясь теплом и добротой. Был прекрасным сыном, братом, мужем и отцом.
@@ -741,9 +928,7 @@ const heroes = [
         d: "24.01.2001 – 10.10.2023",
         p: "photo_2026-03-25_21-22-39.jpg",
         rank: "Контрактник",
-        awards: [
-            "Орден Мужества (посмертно)"
-        ],
+        awards: ["Орден Мужества (посмертно)"],
         bio: `Дильшод родился 24 января 2001 года. С детства грезил армией — не парадами и погонами, а суровой мужской работой, чувством долга и ответственности перед Родиной. Его характер закалялся не только мечтами, но и железом: с юных лет он серьёзно занимался гиревым спортом, собрал множество грамот и медалей с городских, областных соревнований и даже чемпионатов страны. Эта закалка воспитала в нём несгибаемую волю и умение бороться до конца.
 
 Именно эта внутренняя убеждённость привела его к смелому решению: за месяц до защиты диплома механика он бросил учёбу и ушёл на срочную службу. Для него всё было просто: есть долг, а остальное подождёт.
@@ -778,15 +963,10 @@ function render() {
 
 function renderModal(index) {
     const h = heroes[index];
-    const awardsHtml = h.awards.map(a => `
-        <div class="award-item"><span class="award-star">★</span>${a}</div>
-    `).join('');
-
+    const awardsHtml = h.awards.map(a => `<div class="award-item"><span class="award-star">★</span>${a}</div>`).join('');
     document.getElementById('modalInner').innerHTML = `
         <div class="modal-hero-header">
-            <div class="modal-photo-frame">
-                <img src="${h.p}" alt="${h.n}" onerror="this.src='';this.parentElement.innerHTML='<div class=\\'photo-placeholder\\' style=\\'width:100%;height:100%\\'>✦</div>'">
-            </div>
+            <div class="modal-photo-frame"><img src="${h.p}" alt="${h.n}" onerror="this.parentElement.innerHTML='<div class=\\'photo-placeholder\\' style=\\'width:100%;height:100%\\'>✦</div>'"></div>
             <div class="modal-name">${h.n}</div>
             <div class="modal-dates">${h.d}</div>
             <div class="modal-divider"></div>
@@ -794,16 +974,11 @@ function renderModal(index) {
         <div class="modal-body">
             <div class="section-label">Воинское звание</div>
             <div class="bio-text" style="margin-bottom:28px; font-size:1rem;">${h.rank}</div>
-
             <div class="section-label">Награды</div>
             <div class="awards-block">${awardsHtml}</div>
-
             <div class="section-label">Биография</div>
             <div class="bio-text">${h.bio.trim().split('\n\n').map(p => `<p>${p.trim()}</p>`).join('')}</div>
-
-            <div class="eternal-memory">
-                <p>Светлая память. Вечный герой.</p>
-            </div>
+            <div class="eternal-memory"><p>Светлая память. Вечный герой.</p></div>
         </div>
     `;
 }
@@ -811,36 +986,47 @@ function renderModal(index) {
 function openModal(index) {
     currentIndex = index;
     renderModal(index);
-    const overlay = document.getElementById('modalOverlay');
-    overlay.classList.add('active');
-    overlay.scrollTop = 0;
+    document.getElementById('modalOverlay').classList.add('active');
     document.body.style.overflow = 'hidden';
 }
-
 function closeModal() {
     document.getElementById('modalOverlay').classList.remove('active');
     document.body.style.overflow = '';
 }
-
 function changeHero(dir) {
     currentIndex = (currentIndex + dir + heroes.length) % heroes.length;
     renderModal(currentIndex);
     document.getElementById('modalOverlay').scrollTop = 0;
 }
-
-document.getElementById('modalOverlay').addEventListener('click', function(e) {
-    if (e.target === this) closeModal();
-});
-
+document.getElementById('modalOverlay').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
 document.addEventListener('keydown', function(e) {
-    const overlay = document.getElementById('modalOverlay');
-    if (!overlay.classList.contains('active')) return;
+    if (!document.getElementById('modalOverlay').classList.contains('active')) return;
     if (e.key === 'Escape') closeModal();
     if (e.key === 'ArrowLeft') changeHero(-1);
     if (e.key === 'ArrowRight') changeHero(1);
 });
-
 render();
+
+
+const openBtn = document.getElementById('openFormBtn');
+const modalForm = document.getElementById('feedbackModal');
+const closeFormBtn = document.getElementById('closeFormBtn');
+const contactForm = document.getElementById('contactForm');
+const successDiv = document.getElementById('localSuccessMsg');
+
+function openFeedbackModal() { modalForm.classList.add('active'); document.body.style.overflow = 'hidden'; }
+function closeFeedbackModal() { modalForm.classList.remove('active'); document.body.style.overflow = ''; successDiv.classList.remove('show'); }
+
+openBtn.addEventListener('click', openFeedbackModal);
+closeFormBtn.addEventListener('click', closeFeedbackModal);
+modalForm.addEventListener('click', (e) => { if (e.target === modalForm) closeFeedbackModal(); });
+
+contactForm.addEventListener('submit', function() {
+    setTimeout(() => {
+        successDiv.classList.add('show');
+        setTimeout(() => { if (modalForm.classList.contains('active')) closeFeedbackModal(); }, 3000);
+    }, 100);
+});
 </script>
 </body>
 </html>
